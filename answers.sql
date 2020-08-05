@@ -140,3 +140,223 @@ Northwest and Southwest regions.
 
 
 SELECT email FROM salespeople WHERE region = 'Northwest' OR region = 'Southwest';
+
+
+==========
+11
+
+-----
+
+Write a query that shows the emails of all salespeople from both the
+Northwest and Southwest regions, this time using an 'IN' clause.  
+
+
+-----
+
+
+SELECT email FROM salespeople WHERE region IN ('Northwest','Southwest');
+
+
+==========
+12
+
+-----
+
+Write a query that shows the email, first name, and last name of all
+salespeople in either the Northwest or Southwest regions whose last names start
+with the letter 'M'.
+
+-----
+
+
+SELECT email, first_name, last_name
+FROM salespeople
+WHERE region IN ('Northwest','Southwest')
+AND last_name LIKE 'M%';
+
+
+==========
+13
+
+-----
+
+Write a query that shows the melon type, common name, price, and the
+price of the melon given in euros. The 'melons' table has prices in dollars,
+and the dollar to euro conversion rate is 0.73.
+
+
+-----
+
+
+SELECT melon_type, common_name, price, price*.73 FROM melons;
+
+
+==========
+14
+
+-----
+
+Write a query that shows the total number of customers in our customer
+table.
+
+-----
+
+
+SELECT Count(*) FROM customers;
+
+
+==========
+15
+
+-----
+
+Write a query that counts the number of orders (in the orders table) shipped to California.
+
+-----
+
+
+SELECT Count(*) FROM orders WHERE shipto_state = 'CA';
+
+
+==========
+16
+
+-----
+
+Write a query that shows the total amount of money spent across all melon
+orders.
+
+-----
+
+
+SELECT SUM(order_total) FROM orders;
+
+
+==========
+17
+
+-----
+
+Write a query that shows the average order cost.
+
+-----
+
+
+SELECT AVG(order_total) FROM orders;
+
+
+==========
+18
+
+-----
+
+Write a query that shows the order total that was lowest in price.
+
+-----
+
+
+SELECT MIN(order_total) FROM orders;
+
+
+==========
+19
+
+-----
+
+Write a query that fetches the id of the customer whose email is
+'pclark74@gmail.com'.
+
+-----
+
+
+SELECT id FROM customers WHERE email = 'pclark74@gmail.com';
+
+
+==========
+20
+
+-----
+
+Write a query that shows the id, status and order_total for all orders 
+made by customer 100.
+
+-----
+
+
+SELECT id, status, order_total FROM orders WHERE customer_id = 100;
+
+
+==========
+21
+
+-----
+
+Write a single query that shows the id, status, and order total for all
+orders made by 'pclark74@gmail.com'. Use a subselect to do this.
+
+
+-----
+
+
+SELECT orders.id, status, order_total FROM orders JOIN customers 
+ON orders.customer_id = customers.id
+WHERE email = 'pclark74@gmail.com';
+
+
+==========
+22
+
+-----
+
+Write a query that shows the id, status, and order total for all orders
+made by 'pclark74@gmail.com'. Use a join to do this.
+
+-----
+
+
+SELECT orders.id, status, order_total FROM orders JOIN customers ON customers.id = orders.customer_id WHERE email = 'pclark74@gmail.com';
+
+
+==========
+23
+
+-----
+
+Write a query that shows all columns in the order_items table for order #2725.
+
+-----
+
+
+SELECT * FROM order_items where order_id = 2725;
+
+
+==========
+24
+
+-----
+
+Write a query that shows the common_name, melon_type, quantity,
+unit_price and total_price for all the melons in order #2725.
+
+-----
+
+
+SELECT common_name, melon_type, quantity, unit_price, total_price
+FROM melons 
+LEFT JOIN order_items 
+ON melons.id = order_items.melon_id
+WHERE order_id = 2725;
+
+
+==========
+25
+
+-----
+
+Write a query that shows the total amount of revenue that comes from
+internet orders.
+
+-----
+
+
+SELECT sum(order_total) FROM orders WHERE salesperson_id IS NULL;
